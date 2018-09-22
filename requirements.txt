@@ -1,0 +1,7 @@
+Flask-Uploads
+Flask
+Flask-BasicAuth
+Flask-Table
+Flask-HTTPAuth
+passlib
+authlib

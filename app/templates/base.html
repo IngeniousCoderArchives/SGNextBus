@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block title %}Singapore Bus Services{% endblock %}
+{% block body %}
+<h2>Next Bus</h2>
+<span>Next Bus at Stop  {{ busstopcode }}</span>
+</br>
+<form method="POST">
+    Enter a Bus Stop Code to get information: <input type=text size=50 name=bsc><br>
+    <input type="submit" value="Submit"><br>
+</form>
+<ul>
+    {{ table }}
+</ul>
+
+
+{% endblock %}
