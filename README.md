@@ -9,7 +9,9 @@ Enjoy the application? Donate to me at https://patreon.com/eltontay11!
 
 # App Usage Support
 
-https://discord.gg/cCBTHWE OR Submit a Issue
+
+Open a ticket here, or email eltontay11@gmail.com . 
+
 
 # TODO
 
@@ -22,8 +24,6 @@ https://discord.gg/cCBTHWE OR Submit a Issue
 - Change favicon.ico 
 
 - Show Bus Stop Information (eg name, location) of searching bus stop
-
-- Embed google maps for bus location (maybe use google map api and set marker?)
 
 - Not in operation show "Not in operation" instead of just not showing - for second buses
 
