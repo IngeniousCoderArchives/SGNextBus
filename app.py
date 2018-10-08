@@ -1,2 +1,2 @@
 import os
-os.system(app)
+os.system("app")
