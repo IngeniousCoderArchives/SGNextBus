@@ -21,7 +21,7 @@ app.config.update(
 )
 #sitemap = "http://172.245.156.101:4996/"
 #sitemap = "http://localhost:5000/" #for debug purposes
-sitemap = "ingenious-sgnextbus.herokuapp.com"
+sitemap = "https://ingenious-sgnextbus.herokuapp.com"
 
 
 
