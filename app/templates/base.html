@@ -6,11 +6,17 @@
 </br>
 <form method="POST">
     Enter a Bus Stop Code to get information: <input type=text size=50 name=bsc><br>
+    Enter a Bus at this bus stop to get bus location: <input type=text size=50 name=blc><br>
     <input type="submit" value="Submit"><br>
 </form>
 <ul>
-    {{ table }}
+    {{ table |safe }}
 </ul>
+<br><br><br>
+
+<span> {{bus2}}</span>
+{{ bus4|safe }}
+
 
 
 {% endblock %}

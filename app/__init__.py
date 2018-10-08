@@ -15,4 +15,4 @@ mode = os.environ.get(modes.ENVIRONMENT_VARIABLE, modes.DEVELOPMENT)
 import app.views
 
 if __name__ == "__main__":
-  flaskapp.run()
+  flaskapp.run(host="0.0.0.0",port=80)

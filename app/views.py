@@ -19,9 +19,9 @@ import passlib
 app.config.update(
     SECRET_KEY=b'*dys78^7s&_0238*sj^s',
 )
-sitemap = "http://172.245.156.101:4996/"
+#sitemap = "http://172.245.156.101:4996/"
 #sitemap = "http://localhost:5000/" #for debug purposes
-
+sitemap = "ingenious-sgnextbus.herokuapp.com"
 
 
 
@@ -33,29 +33,59 @@ sitemap = "http://172.245.156.101:4996/"
 @app.route("/",methods=["GET","POST"])
 def main():
   if request.method == "POST":
-      return redirect(f"{sitemap}?busstop={request.form.get('bsc')}")
+      if request.form.get('bsc') is not None and request.form.get("blc") is not None:
+        return redirect(f"{sitemap}?busstop={request.form.get('bsc')}&busloc={request.form.get('blc')}")
+      if request.form.get('bsc') is not None:
+        return redirect(f"{sitemap}?busstop={request.form.get('bsc')}")
+      else:
+        return redirect(url_for("main"))
   if request.args.get("busstop") == None:
     table = ["Enter a bus stop code above first."]
-    return render_template("base.html",home=False,tables=table,busstopcode="Undefined")
+    return render_template("base.html",home=False,tables=table,busstopcode="Undefined",codes=["Null"])
   else:
     bus_stop = request.args.get("busstop")
     url = f'http://datamall2.mytransport.sg/ltaodataservice/BusArrivalv2?BusStopCode={int(bus_stop)}'
-    headers = {'AccountKey': 'censored'}
+    headers = {'AccountKey': os.environ.get("APITOKEN")}
     r = requests.get(url, headers=headers)
     data_got = r.json()
     #Time to process data and show
     main_data = data_got["Services"]
     items = []
+    urls = {}
     for service in main_data:
         next_bus_data = service["NextBus"] #is a dict
         nextn_bus_data = service["NextBus2"] #is anotherdict
         try:
-          item2 = Item(service["ServiceNo"],operator(service["Operator"]),next_bus_data["EstimatedArrival"].split("T")[1].split("+")[0],Veh(next_bus_data["Type"]),Load(next_bus_data["Load"]),urlmaps(next_bus_data["Latitude"],next_bus_data["Longitude"]),nextn_bus_data["EstimatedArrival"].split("T")[1].split("+")[0])
+          item2 = Item(service["ServiceNo"],operator(service["Operator"]),next_bus_data["EstimatedArrival"].split("T")[1].split("+")[0],Veh(next_bus_data["Type"]),Load(next_bus_data["Load"]),nextn_bus_data["EstimatedArrival"].split("T")[1].split("+")[0])
           items.append(item2)
-        except:
+          lat = next_bus_data["Latitude"]
+          long = next_bus_data["Longitude"]
+          if lat == 0:
+            pass
+          else:
+            URL = """<script src='https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyD_hce37QhlyI59U2KDKiTEJMSlns47d6E'></script><div style='overflow:hidden;height:440px;width:700px;'><div id='gmap_canvas' style='height:440px;width:700px;'><div style="position:absolute; top:-70px; display:block; text-align:center; z-index:-1;"><a href="https://ukgaynews.org.uk">https://ukgaynews.org.uk</a></div></div><script type='text/javascript'>function init_map(){var myOptions = {zoom:17,center:new google.maps.LatLng("""+lat+","+long+"""),mapTypeId: google.maps.MapTypeId.ROADMAP,fullscreenControl:false,scaleControl:false,draggable:true,streetViewControl:true};map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);marker = new google.maps.Marker({map: map,position: new google.maps.LatLng("""+lat+","+long+""")});}google.maps.event.addDomListener(window, 'load', init_map);</script><div><small><a href="https://www.embedgooglemap.co.uk">Embed Google Map</a></small></div>"""
+            urls[service["ServiceNo"]] = URL
+        except Exception as e:
+          print(e)
           pass
-    return render_template("base.html",home=False,busstopcode = bus_stop, table=ItemTable(items))
-
+    #bus locations
+    if request.args.get("busloc") is None:
+      return render_template("base.html",home=False,busstopcode = bus_stop, table=ItemTable(items))
+    else:
+      #grr now need process the embed map HAIZZZtm
+      service2 = None
+      for service in main_data:
+        if str(service["ServiceNo"]) == str(request.args.get("busloc")):
+          service2 = service
+      if service2 is None:
+        return render_template("base.html",home=False,busstopcode = bus_stop, table=ItemTable(items),bus2="Could not find location of specified service.")
+      lat = service2["NextBus"]["Latitude"]
+      long = service2["NextBus"]["Longitude"]
+      print(lat)
+      if lat == "0":
+        return render_template("base.html",home=False,busstopcode = bus_stop, table=ItemTable(items),bus2="Bus is still at Interchange!")
+      URL = """<script src='https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyD_hce37QhlyI59U2KDKiTEJMSlns47d6E'></script><div style='overflow:hidden;height:440px;width:700px;'><div id='gmap_canvas' style='height:440px;width:700px;'><div style="position:absolute; top:-70px; display:block; text-align:center; z-index:-1;"><a href="https://ukgaynews.org.uk">https://ukgaynews.org.uk</a></div></div><script type='text/javascript'>function init_map(){var myOptions = {zoom:17,center:new google.maps.LatLng("""+lat+","+long+"""),mapTypeId: google.maps.MapTypeId.ROADMAP,fullscreenControl:false,scaleControl:false,draggable:true,streetViewControl:true};map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);marker = new google.maps.Marker({map: map,position: new google.maps.LatLng("""+lat+","+long+""")});}google.maps.event.addDomListener(window, 'load', init_map);</script><div><small><a href="https://www.embedgooglemap.co.uk">Embed Google Map</a></small></div>"""
+      return render_template("base.html",home=False,busstopcode = bus_stop, table=ItemTable(items),bus2=f"Next {service2['ServiceNo']} location",bus4=URL)
 
 def urlmaps(lat, long):
     if lat == "0" or long == "0":
@@ -89,14 +119,13 @@ def Veh(veh):
 
 
 class Item(object):
-    def __init__(self, svcno, operator, nextbus, veh, load, position, nextbus2):
+    def __init__(self, svcno, operator, nextbus, veh, load, nextbus2):
       self.svcno = svcno
       self.operator = operator
       self.nextbus = nextbus
       self.nextbus2 = nextbus2
       self.veh = veh
       self.load = load
-      self.position = position
 
 class ItemTable(Table):
     svcno = Col("Service Number")
@@ -104,7 +133,6 @@ class ItemTable(Table):
     nextbus = Col("Estimated Next Bus Arrival Time")
     veh = Col ("Vehicle Type")
     load = Col("Vehicle Load")
-    position = Col("Vehicle Position")
     nextbus2 = Col("Estimated Subsequent Bus Arrival Time")
 
 
@@ -124,3 +152,8 @@ class ItemTable(Table):
     input("Press enter to exit.")
 
     """
+
+
+    """ MAP PLOT REFERENCE
+      https://python-graph-gallery.com/310-basic-map-with-markers/
+      https://matplotlib.org/basemap/users/examples.html"""
