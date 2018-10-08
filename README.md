@@ -1,7 +1,7 @@
 # SG Next Bus
 This is a flask application that allows you to check the next bus
 
-Use the app at http://172.245.156.101:4996 or Selfhost It. However, no support is given for self installation.
+Use the app at https://ingenious-sgnextbus.herokuapp.com/ or Selfhost It. However, no support is given for self installation.
 
 # Donate
 
