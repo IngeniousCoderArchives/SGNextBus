@@ -31,6 +31,10 @@ Open a ticket here, or email eltontay11@gmail.com .
 
 - Search by Bus Route
 
+- Fare estimator
+
+- MRT Routing GPS (and fare estimator)
+
 - Get bus Route
 
 - Search by Nearby
