@@ -17,6 +17,10 @@ Open a ticket here, or email eltontay11@gmail.com .
 
 - Add search history 
 
+- MRT GPS Routing and fare estimator
+
+- Fare estimator
+
 - Add favourites
 
 - Show time to next bus in minutes instead of exact time only
@@ -30,10 +34,6 @@ Open a ticket here, or email eltontay11@gmail.com .
 - Second Visit (if applicable)
 
 - Search by Bus Route
-
-- Fare estimator
-
-- MRT Routing GPS (and fare estimator)
 
 - Get bus Route
 

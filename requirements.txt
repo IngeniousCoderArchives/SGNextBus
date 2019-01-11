@@ -1,5 +1,6 @@
-Flask-Uploads
+requests
 Flask
+Flask-Uploads
 Flask-BasicAuth
 Flask-Table
 Flask-HTTPAuth

@@ -26,10 +26,6 @@ sitemap = "https://ingenious-sgnextbus.herokuapp.com"
 
 
 
-
-
-
-
 @app.route("/",methods=["GET","POST"])
 def main():
   if request.method == "POST":
@@ -78,6 +74,8 @@ def main():
         if str(service["ServiceNo"]) == str(request.args.get("busloc")):
           service2 = service
       if service2 is None:
+        if request.args.get("busloc") == "":
+          return render_template("base.html",home=False,busstopcode = bus_stop, table=ItemTable(items),bus2="")
         return render_template("base.html",home=False,busstopcode = bus_stop, table=ItemTable(items),bus2="Could not find location of specified service.")
       lat = service2["NextBus"]["Latitude"]
       long = service2["NextBus"]["Longitude"]
