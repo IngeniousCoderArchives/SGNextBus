@@ -1,3 +1,5 @@
+**An Application created by IngeniousApplications (http://ingeniousapps.tk)**
+
 # SG Next Bus
 This is a flask application that allows you to check the next bus
 
@@ -9,8 +11,7 @@ Enjoy the application? Donate to me at https://patreon.com/eltontay11!
 
 # App Usage Support
 
-
-Open a ticket here, or email eltontay11@gmail.com . 
+Open a ticket here, or join our discord at http://ingeniousapps.tk/discord. 
 
 
 # TODO
