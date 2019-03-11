@@ -1,17 +1,38 @@
-**An Application created by IngeniousApplications (http://ingeniousapps.tk)**
 
+Another Application by IngeniousApplications
+![IA Logo](http://ingeniousapps.tk/cdn/IA_Logo.png)
+
+[Discord](http://ingeniousapps.tk/discord)
+
+[Website](http://ingeniousapps.tk)
+
+[Donate to us](https://patreon.com/eltontay11)
 # SG Next Bus
 This is a flask application that allows you to check the next bus
 
 Use the app at https://ingenious-sgnextbus.herokuapp.com/ or Selfhost It. However, no support is given for self installation.
 
-# Donate
+## Author
 
-Enjoy the application? Donate to me at https://patreon.com/eltontay11!
+- XtremeCoder
 
-# App Usage Support
 
-Open a ticket here, or join our discord at http://ingeniousapps.tk/discord. 
+## Dependencies
+
+- flask
+- flask-table
+- requests
+- LTA Datamall token
+
+
+## Bug Reporting and Feature Requesting
+Use the Issues tab under this repository to report bugs and suggest features.
+
+## Credits 
+LTA Datamall
+
+
+Another Quality Application by IngeniousApplications
 
 
 # TODO
