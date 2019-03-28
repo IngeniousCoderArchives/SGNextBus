@@ -10,7 +10,7 @@ Another Application by IngeniousApplications
 # SG Next Bus
 This is a flask application that allows you to check the next bus
 
-Use the app at https://ingenious-sgnextbus.herokuapp.com/ or Selfhost It. However, no support is given for self installation.
+Use the app at https://ingeniousapps.net/sgnextbus or Selfhost It. However, no support is given for self installation.
 
 ## Author
 
